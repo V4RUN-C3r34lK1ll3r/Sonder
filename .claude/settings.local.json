@@ -1,0 +1,29 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm --version)",
+      "Bash(cmd.exe /c \"node --version && npm --version\")",
+      "Bash(cmd.exe /c \"where node\")",
+      "Bash(cmd.exe /c \"where node & where npm & node --version & npm --version\")",
+      "Read(//c/Program Files/nodejs//**)",
+      "Read(//c/Program Files \\(x86\\)/**)",
+      "Bash(cmd.exe /c \"powershell -Command \\\\\"[System.Environment]::GetEnvironmentVariable\\('PATH', 'Machine'\\)\\\\\"\")",
+      "Bash(mkdir -p \"d:/Sonder/app/gallery/[slug]/[event]\")",
+      "WebFetch(domain:mechapixelphotography.mypixieset.com)",
+      "Bash(node -e \"require\\('framer-motion'\\); console.log\\('ok'\\)\")",
+      "Bash(node -e \"console.log\\(require\\('d:/Sonder/node_modules/next/package.json'\\).version\\)\")",
+      "Bash(npm install *)",
+      "Bash(sed -i 's/pt-28 pb-24/pt-24 pb-16/g' d:/Sonder/app/gallery/page.tsx d:/Sonder/app/gallery/[slug]/page.tsx \"d:/Sonder/app/gallery/[slug]/[event]/page.tsx\" d:/Sonder/app/about/page.tsx && echo \"done\")",
+      "Bash(npm list *)",
+      "Bash(npx tsc *)",
+      "Bash(npx next *)",
+      "Bash(Remove-Item -Recurse -Force .next -ErrorAction SilentlyContinue)",
+      "Bash(Write-Host \"Cache cleared\")",
+      "Bash(node -e ' *)",
+      "PowerShell(Get-Process -Name \"node\" -ErrorAction SilentlyContinue)"
+    ],
+    "additionalDirectories": [
+      "d:\\Sonder\\app\\gallery\\[slug]"
+    ]
+  }
+}

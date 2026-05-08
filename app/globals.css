@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: theme("colors.canvas");
+    color: theme("colors.ivory");
+    font-family: var(--font-inter), system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: theme("colors.gold");
+    color: theme("colors.canvas");
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: theme("colors.canvas");
+  }
+  ::-webkit-scrollbar-thumb {
+    background: theme("colors.border");
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: theme("colors.muted");
+  }
+}
+
+@layer components {
+  /* Fade-up animation on scroll — add .reveal to elements, JS adds .visible */
+  .reveal {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Gold link underline style */
+  .link-gold {
+    @apply text-ivory/70 hover:text-gold transition-colors duration-300 underline-offset-4;
+  }
+  .link-gold:hover {
+    text-decoration-color: theme("colors.gold");
+    text-underline-offset: 4px;
+  }
+}
+
+/* Masonry column styles */
+.masonry-grid {
+  display: flex;
+  margin-left: -12px;
+  width: auto;
+}
+.masonry-column {
+  padding-left: 12px;
+  background-clip: padding-box;
+}
+.masonry-column > div {
+  margin-bottom: 12px;
+}
+
+/* Hero crossfade — 6 slides × 5s each = 30s cycle */
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  animation: heroFade 30s ease-in-out infinite;
+}
+.hero-slide:nth-child(1) { animation-delay: 0s; }
+.hero-slide:nth-child(2) { animation-delay: 5s; }
+.hero-slide:nth-child(3) { animation-delay: 10s; }
+.hero-slide:nth-child(4) { animation-delay: 15s; }
+.hero-slide:nth-child(5) { animation-delay: 20s; }
+.hero-slide:nth-child(6) { animation-delay: 25s; }
+
+@keyframes heroFade {
+  0%   { opacity: 0; }
+  5%   { opacity: 1; }
+  28%  { opacity: 1; }
+  33%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+/* Ken Burns subtle zoom on hero images */
+.hero-slide img, .hero-slide > div {
+  animation: kenBurns 24s ease-in-out infinite;
+}
+@keyframes kenBurns {
+  0%   { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
