@@ -29,7 +29,7 @@ export default async function AboutPage() {
     // Sanity not configured
   }
 
-  const photographerName = settings?.photographerName ?? "The Photographer";
+  const photographerName = settings?.photographerName ?? "Varun";
   const photographerPhoto = settings?.photographerPhoto;
   const aboutBlocks = (settings?.aboutText ?? []) as {
     _type: string;
