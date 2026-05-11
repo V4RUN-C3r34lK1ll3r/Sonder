@@ -8,6 +8,7 @@ interface ParallaxHeroProps {
 }
 
 const CANVAS = "#09080a";
+const GOLD   = "#D4682A";
 
 const HILLS = [
   {
@@ -28,29 +29,62 @@ const HILLS = [
   },
 ];
 
-// Camera icons scattered across the sky — each shoots diagonally and fades
+// Cameras kept to left/right edges — away from centre text
 const CAMERAS = [
-  { top: "10%", left: "5%",  size: 38, delay: "0s",    dur: "6s",  dx: 120, dy: 60  },
-  { top: "6%",  left: "22%", size: 32, delay: "1.5s",  dur: "7s",  dx: 90,  dy: 50  },
-  { top: "18%", left: "40%", size: 42, delay: "3.0s",  dur: "5.5s",dx: 140, dy: 70  },
-  { top: "8%",  left: "58%", size: 30, delay: "0.8s",  dur: "8s",  dx: 100, dy: 55  },
-  { top: "14%", left: "72%", size: 36, delay: "2.2s",  dur: "6.5s",dx: 110, dy: 65  },
-  { top: "5%",  left: "85%", size: 28, delay: "4.0s",  dur: "5s",  dx: 80,  dy: 45  },
-  { top: "22%", left: "30%", size: 34, delay: "5.5s",  dur: "7.5s",dx: 130, dy: 60  },
-  { top: "12%", left: "52%", size: 40, delay: "2.8s",  dur: "6s",  dx: 95,  dy: 50  },
+  { top: "6%",  left: "2%",  size: 40, delay: "0s",   dur: "6.5s", dx: 100, dy: 55 },
+  { top: "18%", left: "6%",  size: 32, delay: "2.2s", dur: "7.0s", dx: 85,  dy: 45 },
+  { top: "4%",  left: "14%", size: 36, delay: "4.5s", dur: "5.8s", dx: 110, dy: 60 },
+  { top: "4%",  left: "72%", size: 38, delay: "1.0s", dur: "6.0s", dx: 95,  dy: 50 },
+  { top: "16%", left: "80%", size: 34, delay: "3.2s", dur: "7.5s", dx: 80,  dy: 42 },
+  { top: "7%",  left: "88%", size: 30, delay: "0.6s", dur: "5.5s", dx: 70,  dy: 40 },
+  { top: "2%",  left: "42%", size: 28, delay: "5.0s", dur: "6.2s", dx: 90,  dy: 48 },
+  { top: "2%",  left: "56%", size: 26, delay: "2.8s", dur: "8.0s", dx: 75,  dy: 38 },
 ];
+
+// Inline SVG camera silhouette — no background issues
+function CameraIcon({ size }: { size: number }) {
+  return (
+    <svg
+      width={size}
+      height={size * 0.68}
+      viewBox="0 0 100 68"
+      fill={GOLD}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      {/* Grip */}
+      <rect x="2" y="16" width="18" height="44" rx="4" />
+      {/* Body */}
+      <rect x="18" y="24" width="74" height="36" rx="3" />
+      {/* Top deck */}
+      <rect x="18" y="16" width="74" height="12" rx="2" />
+      {/* Pentaprism hump */}
+      <rect x="30" y="8" width="26" height="12" rx="3" />
+      {/* Shutter button */}
+      <circle cx="30" cy="19" r="4" fill="#B04818" />
+      {/* Mode dial */}
+      <circle cx="82" cy="13" r="5" fill="#B04818" />
+      {/* Lens outer ring */}
+      <circle cx="68" cy="42" r="22" fill="#B04818" />
+      {/* Lens mid */}
+      <circle cx="68" cy="42" r="15" fill={GOLD} />
+      {/* Lens inner */}
+      <circle cx="68" cy="42" r="9" fill="#B04818" />
+      {/* Lens glint */}
+      <circle cx="63" cy="38" r="3" fill="rgba(255,220,180,0.3)" />
+    </svg>
+  );
+}
 
 const CSS = `
   @keyframes scroll-hill {
     from { transform: translateX(0); }
     to   { transform: translateX(-33.333%); }
   }
-
   @keyframes cam-shoot {
-    0%         { opacity: 0;   transform: translate(0px, 0px) scale(0.7); }
-    12%        { opacity: 0.9; transform: translate(0px, 0px) scale(1);   }
-    80%        { opacity: 0.6; }
-    100%       { opacity: 0;   transform: translate(var(--dx), var(--dy)) scale(0.5); }
+    0%   { opacity: 0;   transform: translate(0px, 0px)                    scale(0.75); }
+    10%  { opacity: 0.9; transform: translate(0px, 0px)                    scale(1);    }
+    85%  { opacity: 0.5; }
+    100% { opacity: 0;   transform: translate(var(--dx), var(--dy))        scale(0.5);  }
   }
 `;
 
@@ -86,23 +120,13 @@ export default function ParallaxHero({ tagline, subTagline }: ParallaxHeroProps)
             top: c.top,
             left: c.left,
             zIndex: 6,
-            width: c.size,
-            height: c.size,
-            // CSS custom properties for per-element translate values
             ["--dx" as string]: `${c.dx}px`,
             ["--dy" as string]: `${c.dy}px`,
             animation: `cam-shoot ${c.dur} ease-in-out ${c.delay} infinite`,
-            filter: "drop-shadow(0 0 6px rgba(212,104,42,0.5))",
+            filter: "drop-shadow(0 0 5px rgba(212,104,42,0.45))",
           }}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/camera.png"
-            alt=""
-            width={c.size}
-            height={c.size}
-            style={{ width: "100%", height: "100%", objectFit: "contain" }}
-          />
+          <CameraIcon size={c.size} />
         </div>
       ))}
 
@@ -131,21 +155,30 @@ export default function ParallaxHero({ tagline, subTagline }: ParallaxHeroProps)
         </div>
       ))}
 
-      {/* Text */}
+      {/* Text — centred with text-shadow for legibility */}
       <div
         className="absolute inset-0 flex flex-col items-center justify-center text-center px-6"
         style={{ zIndex: 10, paddingBottom: "10%" }}
       >
-        <p className="text-gold text-[10px] tracking-[0.5em] uppercase mb-5">
+        <p
+          className="text-gold text-[10px] tracking-[0.5em] uppercase mb-5"
+          style={{ textShadow: "0 1px 8px rgba(0,0,0,0.8)" }}
+        >
           Sonder Studios
         </p>
         <h1
           className="font-serif text-ivory leading-[1.1] mb-5"
-          style={{ fontSize: "clamp(2rem, 5.5vw, 4.5rem)" }}
+          style={{
+            fontSize: "clamp(2rem, 5.5vw, 4.5rem)",
+            textShadow: "0 2px 20px rgba(0,0,0,0.9), 0 1px 4px rgba(0,0,0,0.8)",
+          }}
         >
           {tagline ?? "Every life is as vivid and full as your own."}
         </h1>
-        <p className="text-muted text-sm md:text-base max-w-sm leading-relaxed mb-10">
+        <p
+          className="text-muted text-sm md:text-base max-w-sm leading-relaxed mb-10"
+          style={{ textShadow: "0 1px 8px rgba(0,0,0,0.8)" }}
+        >
           {subTagline ?? "Quiet, honest, and alive with meaning."}
         </p>
         <Link
