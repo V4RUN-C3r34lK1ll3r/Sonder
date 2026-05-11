@@ -111,14 +111,14 @@ export function Header() {
             <Link
               key={href}
               href={href}
-              className={`text-[14px] tracking-[0.12em] uppercase font-medium transition-colors duration-300 ${
-                pathname.startsWith(href) ? "text-gold" : "text-ivory/60"
+              className={`text-[15px] tracking-[0.12em] uppercase font-medium transition-colors duration-300 ${
+                pathname.startsWith(href) ? "text-gold" : "text-ivory hover:text-gold"
               }`}
             >
               {label}
             </Link>
           ))}
-          <Link href="/contact" className="self-start px-5 py-2 border border-teal/50 text-teal text-[13px] tracking-[0.12em] uppercase">
+          <Link href="/contact" className="self-start px-5 py-2.5 border border-gold/50 text-gold text-[13px] tracking-[0.12em] uppercase hover:bg-gold hover:text-canvas transition-all duration-300">
             Book Now
           </Link>
         </nav>

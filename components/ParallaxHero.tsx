@@ -29,16 +29,16 @@ const HILLS = [
   },
 ];
 
-// Cameras kept to left/right edges — away from centre text
+// Cameras kept to edges, starting below the 76px fixed header
 const CAMERAS = [
-  { top: "6%",  left: "2%",  size: 40, delay: "0s",   dur: "6.5s", dx: 100, dy: 55 },
-  { top: "18%", left: "6%",  size: 32, delay: "2.2s", dur: "7.0s", dx: 85,  dy: 45 },
-  { top: "4%",  left: "14%", size: 36, delay: "4.5s", dur: "5.8s", dx: 110, dy: 60 },
-  { top: "4%",  left: "72%", size: 38, delay: "1.0s", dur: "6.0s", dx: 95,  dy: 50 },
-  { top: "16%", left: "80%", size: 34, delay: "3.2s", dur: "7.5s", dx: 80,  dy: 42 },
-  { top: "7%",  left: "88%", size: 30, delay: "0.6s", dur: "5.5s", dx: 70,  dy: 40 },
-  { top: "2%",  left: "42%", size: 28, delay: "5.0s", dur: "6.2s", dx: 90,  dy: 48 },
-  { top: "2%",  left: "56%", size: 26, delay: "2.8s", dur: "8.0s", dx: 75,  dy: 38 },
+  { top: "14%", left: "2%",  size: 40, delay: "0s",   dur: "6.5s", dx: 100, dy: 55 },
+  { top: "24%", left: "5%",  size: 32, delay: "2.2s", dur: "7.0s", dx: 85,  dy: 45 },
+  { top: "12%", left: "13%", size: 36, delay: "4.5s", dur: "5.8s", dx: 110, dy: 60 },
+  { top: "12%", left: "74%", size: 38, delay: "1.0s", dur: "6.0s", dx: 95,  dy: 50 },
+  { top: "26%", left: "80%", size: 34, delay: "3.2s", dur: "7.5s", dx: 80,  dy: 42 },
+  { top: "15%", left: "88%", size: 30, delay: "0.6s", dur: "5.5s", dx: 70,  dy: 40 },
+  { top: "10%", left: "42%", size: 28, delay: "5.0s", dur: "6.2s", dx: 90,  dy: 48 },
+  { top: "10%", left: "56%", size: 26, delay: "2.8s", dur: "8.0s", dx: 75,  dy: 38 },
 ];
 
 // Inline SVG camera silhouette — no background issues
@@ -93,9 +93,8 @@ export default function ParallaxHero({ tagline, subTagline }: ParallaxHeroProps)
     <section
       className="relative w-full overflow-hidden"
       style={{
-        height: "80vh",
-        minHeight: "480px",
-        maxHeight: "820px",
+        height: "100svh",
+        minHeight: "500px",
         background: `linear-gradient(to bottom, #120A06 0%, ${CANVAS} 60%)`,
       }}
     >
@@ -132,7 +131,7 @@ export default function ParallaxHero({ tagline, subTagline }: ParallaxHeroProps)
 
       {/* Scrolling hill layers */}
       {HILLS.map((h) => (
-        <div key={h.id} className="absolute inset-x-0 bottom-0" style={{ zIndex: h.zIndex, height: "58%" }}>
+        <div key={h.id} className="absolute inset-x-0 bottom-0" style={{ zIndex: h.zIndex, height: "72%" }}>
           <div
             style={{
               display: "flex",
@@ -158,7 +157,7 @@ export default function ParallaxHero({ tagline, subTagline }: ParallaxHeroProps)
       {/* Text — centred within the sky zone (top 42% of hero) */}
       <div
         className="absolute inset-x-0 flex flex-col items-center justify-center text-center px-6"
-        style={{ top: 0, height: "42%", zIndex: 10 }}
+        style={{ top: 0, height: "28%", zIndex: 10 }}
       >
         <p
           className="text-[10px] tracking-[0.5em] uppercase mb-4"
