@@ -2,19 +2,14 @@
 
 import dynamic from "next/dynamic";
 
-// next/dynamic with ssr:false must live in a client component in Next.js 15+
-const EventGalaxy = dynamic(() => import("@/components/EventGalaxy"), { ssr: false });
+const ParallaxHero = dynamic(() => import("@/components/ParallaxHero"), { ssr: false });
 
 interface HeroWrapperProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  events: any[];
+  events?: unknown[];
   tagline?: string;
   subTagline?: string;
 }
 
-export function HeroWrapper({ events, tagline, subTagline }: HeroWrapperProps) {
-  return (
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    <EventGalaxy events={events as any} tagline={tagline} subTagline={subTagline} />
-  );
+export function HeroWrapper({ tagline, subTagline }: HeroWrapperProps) {
+  return <ParallaxHero tagline={tagline} subTagline={subTagline} />;
 }
