@@ -97,7 +97,7 @@ export default function ParallaxHero({ tagline, subTagline }: ParallaxHeroProps)
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src="/camera.gif"
+            src="/camera.png"
             alt=""
             width={c.size}
             height={c.size}
