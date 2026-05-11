@@ -28,16 +28,16 @@ const HILLS = [
   },
 ];
 
-// Each shooting star: position in sky, angle, size, delay, duration
-const STARS = [
-  { top: "12%", left: "8%",  angle: 32, len: 80,  delay: "0.2s",  dur: "1.1s", loop: "5.8s"  },
-  { top: "6%",  left: "25%", angle: 28, len: 110, delay: "1.4s",  dur: "0.9s", loop: "7.2s"  },
-  { top: "18%", left: "45%", angle: 35, len: 65,  delay: "0.7s",  dur: "1.2s", loop: "6.1s"  },
-  { top: "8%",  left: "62%", angle: 25, len: 95,  delay: "2.1s",  dur: "1.0s", loop: "8.4s"  },
-  { top: "15%", left: "75%", angle: 30, len: 75,  delay: "0.4s",  dur: "1.3s", loop: "5.2s"  },
-  { top: "5%",  left: "88%", angle: 38, len: 55,  delay: "1.8s",  dur: "0.8s", loop: "7.7s"  },
-  { top: "22%", left: "33%", angle: 27, len: 90,  delay: "3.0s",  dur: "1.1s", loop: "9.0s"  },
-  { top: "10%", left: "55%", angle: 33, len: 70,  delay: "2.5s",  dur: "1.0s", loop: "6.5s"  },
+// Camera icons scattered across the sky — each shoots diagonally and fades
+const CAMERAS = [
+  { top: "10%", left: "5%",  size: 38, delay: "0s",    dur: "6s",  dx: 120, dy: 60  },
+  { top: "6%",  left: "22%", size: 32, delay: "1.5s",  dur: "7s",  dx: 90,  dy: 50  },
+  { top: "18%", left: "40%", size: 42, delay: "3.0s",  dur: "5.5s",dx: 140, dy: 70  },
+  { top: "8%",  left: "58%", size: 30, delay: "0.8s",  dur: "8s",  dx: 100, dy: 55  },
+  { top: "14%", left: "72%", size: 36, delay: "2.2s",  dur: "6.5s",dx: 110, dy: 65  },
+  { top: "5%",  left: "85%", size: 28, delay: "4.0s",  dur: "5s",  dx: 80,  dy: 45  },
+  { top: "22%", left: "30%", size: 34, delay: "5.5s",  dur: "7.5s",dx: 130, dy: 60  },
+  { top: "12%", left: "52%", size: 40, delay: "2.8s",  dur: "6s",  dx: 95,  dy: 50  },
 ];
 
 const CSS = `
@@ -46,17 +46,11 @@ const CSS = `
     to   { transform: translateX(-33.333%); }
   }
 
-  @keyframes shoot {
-    0%   { opacity: 0;   transform: translateX(0)    translateY(0); }
-    8%   { opacity: 1; }
-    85%  { opacity: 0.7; }
-    100% { opacity: 0;   transform: translateX(180px) translateY(90px); }
-  }
-
-  @keyframes flash-burst {
-    0%        { opacity: 0; transform: scale(0.2); }
-    10%, 25%  { opacity: 1; transform: scale(1); }
-    50%, 100% { opacity: 0; transform: scale(0.1); }
+  @keyframes cam-shoot {
+    0%         { opacity: 0;   transform: translate(0px, 0px) scale(0.7); }
+    12%        { opacity: 0.9; transform: translate(0px, 0px) scale(1);   }
+    80%        { opacity: 0.6; }
+    100%       { opacity: 0;   transform: translate(var(--dx), var(--dy)) scale(0.5); }
   }
 `;
 
@@ -83,43 +77,31 @@ export default function ParallaxHero({ tagline, subTagline }: ParallaxHeroProps)
         }}
       />
 
-      {/* Shooting stars — camera shutter flashes */}
-      {STARS.map((s, i) => (
+      {/* Camera shooting stars */}
+      {CAMERAS.map((c, i) => (
         <div
           key={i}
           className="absolute pointer-events-none"
-          style={{ top: s.top, left: s.left, zIndex: 6 }}
+          style={{
+            top: c.top,
+            left: c.left,
+            zIndex: 6,
+            width: c.size,
+            height: c.size,
+            // CSS custom properties for per-element translate values
+            ["--dx" as string]: `${c.dx}px`,
+            ["--dy" as string]: `${c.dy}px`,
+            animation: `cam-shoot ${c.dur} ease-in-out ${c.delay} infinite`,
+            filter: "drop-shadow(0 0 6px rgba(212,104,42,0.5))",
+          }}
         >
-          {/* Flash burst at head */}
-          <div
-            style={{
-              position: "absolute",
-              width: "6px",
-              height: "6px",
-              borderRadius: "50%",
-              background: "radial-gradient(circle, rgba(255,210,160,0.95) 0%, rgba(212,104,42,0.6) 50%, transparent 100%)",
-              transform: "translate(-50%, -50%)",
-              animation: `flash-burst ${s.dur} ease-out ${s.delay} both`,
-              animationIterationCount: "infinite",
-              animationDelay: s.delay,
-              // stagger the loop slightly per star
-              animationDuration: s.loop,
-            }}
-          />
-          {/* Trail */}
-          <div
-            style={{
-              width: `${s.len}px`,
-              height: "1.5px",
-              borderRadius: "2px",
-              background: `linear-gradient(to right, rgba(255,210,160,0.9), rgba(212,104,42,0.5) 40%, transparent)`,
-              transform: `rotate(${s.angle}deg)`,
-              transformOrigin: "left center",
-              animation: `shoot ${s.dur} ease-out both`,
-              animationIterationCount: "infinite",
-              animationDelay: s.delay,
-              animationDuration: s.loop,
-            }}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/camera.gif"
+            alt=""
+            width={c.size}
+            height={c.size}
+            style={{ width: "100%", height: "100%", objectFit: "contain" }}
           />
         </div>
       ))}
