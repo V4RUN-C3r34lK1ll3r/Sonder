@@ -155,35 +155,47 @@ export default function ParallaxHero({ tagline, subTagline }: ParallaxHeroProps)
         </div>
       ))}
 
-      {/* Text — centred with text-shadow for legibility */}
+      {/* Text — centred within the sky zone (top 42% of hero) */}
       <div
-        className="absolute inset-0 flex flex-col items-center justify-center text-center px-6"
-        style={{ zIndex: 10, paddingBottom: "10%" }}
+        className="absolute inset-x-0 flex flex-col items-center justify-center text-center px-6"
+        style={{ top: 0, height: "42%", zIndex: 10 }}
       >
         <p
-          className="text-gold text-[10px] tracking-[0.5em] uppercase mb-5"
-          style={{ textShadow: "0 1px 8px rgba(0,0,0,0.8)" }}
+          className="text-[10px] tracking-[0.5em] uppercase mb-4"
+          style={{ color: "#D4682A", letterSpacing: "0.5em" }}
         >
           Sonder Studios
         </p>
         <h1
-          className="font-serif text-ivory leading-[1.1] mb-5"
+          className="font-serif leading-[1.15] mb-4"
           style={{
-            fontSize: "clamp(2rem, 5.5vw, 4.5rem)",
-            textShadow: "0 2px 20px rgba(0,0,0,0.9), 0 1px 4px rgba(0,0,0,0.8)",
+            fontSize: "clamp(1.8rem, 5vw, 4rem)",
+            color: "#FFFFFF",
+            textShadow: "0 2px 24px rgba(0,0,0,1), 0 0 8px rgba(0,0,0,0.9)",
           }}
         >
           {tagline ?? "Every life is as vivid and full as your own."}
         </h1>
         <p
-          className="text-muted text-sm md:text-base max-w-sm leading-relaxed mb-10"
-          style={{ textShadow: "0 1px 8px rgba(0,0,0,0.8)" }}
+          className="text-sm md:text-base max-w-sm leading-relaxed mb-8"
+          style={{
+            color: "rgba(255,255,255,0.65)",
+            textShadow: "0 1px 10px rgba(0,0,0,0.9)",
+          }}
         >
           {subTagline ?? "Quiet, honest, and alive with meaning."}
         </p>
         <Link
           href="/gallery"
-          className="inline-block px-8 py-3.5 border border-gold/40 text-gold text-xs tracking-[0.3em] uppercase hover:bg-gold hover:text-canvas transition-all duration-300"
+          className="inline-block border hover:bg-gold hover:text-canvas transition-all duration-300"
+          style={{
+            padding: "14px 40px",
+            borderColor: "rgba(212,104,42,0.6)",
+            color: "#D4682A",
+            fontSize: "11px",
+            letterSpacing: "0.3em",
+            textTransform: "uppercase",
+          }}
         >
           View the Work
         </Link>
